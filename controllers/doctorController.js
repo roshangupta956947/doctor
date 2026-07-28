@@ -45,17 +45,114 @@ const getDoctors = async (req, res, next) => {
             ];
         }
 
-        if (active !== undefined){
-            filter.isActive = active ==="true"
+        if (active !== undefined) {
+            filter.isActive = active === "true"
         }
-        const doctors = await Doctor.find(filter).sort({createdAt:-1});
+        const doctors = await Doctor.find(filter).sort({ createdAt: -1 });
         res.json({
-            success:true,
-            count:doctors.length,
-            data:doctors
+            success: true,
+            count: doctors.length,
+            data: doctors
         });
     } catch (error) {
         next(error);
 
     }
+};
+
+const getSingleDoctor = async (req, res, next) => {
+    try {
+        const { id } = req.params.id;
+        const doctor = await Doctor.findById(id);
+        if (!doctor) {
+            return res.status(403).json({
+                success: false,
+                message: "Doctor Not Found"
+            })
+        }
+        res.json({
+            success: true,
+            data: doctor
+        });
+    } catch (error) {
+
+    }
+};
+
+const updateDoctor = async (req, res, next) => {
+    try {
+        const doctor = await Doctor.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidator: true
+            });
+        if (!doctor) {
+            return res.status(403), json({
+                success: false,
+                message: "Doctor not found",
+                data: doctor
+            })
+        }
+        res.json({
+            success: true,
+            message: "Doctor record updcated",
+            data: doctor
+        })
+    } catch (error) {
+        next(error)
+
+    }
 }
+
+const patchDoctor = async (req, res, next) => {
+    try {
+        const { isActive } = req.body;
+        const doctor = await Doctor.findByIdAndUpdate(
+            req.params.id,
+            { isActive },
+            {
+                new: true,
+                runValidator: true
+            }
+        );
+        if (!doctor) {
+            return res.status(403).json({
+                success: "false",
+                message: "Doctor Not Found"
+            });
+        }
+        res.json({
+            success: true,
+            message: " Doctor Status Updated",
+            data: doctor
+        });
+    } catch (error) {
+        next(error)
+    }
+
+};
+
+const getAllAppointments= async(req,res,next)=>{
+    try {
+        const {id}= req.params;
+        const appointments = await Appointment.find({
+            doctor:id
+        })
+        .populate("patient","name age phone gender")
+        .sort({
+            appointmentDate:1,
+            appointmentTime:1
+        });
+        res.json({
+            success:true,
+            count:appointments.length,
+            data:appointments
+        });
+    } catch (error) {
+        next(error)
+    }
+};
+
+module.exports = {createDoctor,getDoctors,getSingleDoctor,updateDoctor,statusDoctor,getAllAppointments}
