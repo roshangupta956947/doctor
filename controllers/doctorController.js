@@ -106,7 +106,7 @@ const updateDoctor = async (req, res, next) => {
     }
 }
 
-const patchDoctor = async (req, res, next) => {
+const statusDoctor = async (req, res, next) => {
     try {
         const { isActive } = req.body;
         const doctor = await Doctor.findByIdAndUpdate(
@@ -134,25 +134,25 @@ const patchDoctor = async (req, res, next) => {
 
 };
 
-const getAllAppointments= async(req,res,next)=>{
+const getAllAppointments = async (req, res, next) => {
     try {
-        const {id}= req.params;
+        const { id } = req.params;
         const appointments = await Appointment.find({
-            doctor:id
+            doctor: id
         })
-        .populate("patient","name age phone gender")
-        .sort({
-            appointmentDate:1,
-            appointmentTime:1
-        });
+            .populate("patient", "name age phone gender")
+            .sort({
+                appointmentDate: 1,
+                appointmentTime: 1
+            });
         res.json({
-            success:true,
-            count:appointments.length,
-            data:appointments
+            success: true,
+            count: appointments.length,
+            data: appointments
         });
     } catch (error) {
         next(error)
     }
 };
 
-module.exports = {createDoctor,getDoctors,getSingleDoctor,updateDoctor,statusDoctor,getAllAppointments}
+module.exports = { createDoctor, getDoctors, getSingleDoctor, updateDoctor, statusDoctor, getAllAppointments }
