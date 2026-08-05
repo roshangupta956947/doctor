@@ -20,8 +20,6 @@ const normalizeDate = (datevalue) => {
     date.setHours(0, 0, 0, 0);
     return date;
 };
-
-
 const bookAppointment = async (req, res, next) => {
     try {
         const {
@@ -199,7 +197,7 @@ const getTodayAppointments = async(req,res,next)=>{
             date:today,
             count:appointments.length,
             data:appointments
-        })
+        });
     } catch (error) {
         next(error)
         
