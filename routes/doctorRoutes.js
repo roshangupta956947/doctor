@@ -1,13 +1,12 @@
+const { createDoctor, getAllDoctors, getSingleDoctor, updateDoctor, statusUpdateDoctor, getDoctorAppointments } = require("../controllers/doctorController");
 const express = require("express");
-const { createDoctor, getDoctors, getSingleDoctor, updateDoctor, statusDoctor, getAllAppointments } = require("../controllers/doctorController");
-
 const router = express.Router();
 
 router.post("/",createDoctor);
-router.get("/",getDoctors);
+router.get("/",getAllDoctors);
 router.get("/:id",getSingleDoctor);
 router.put("/:id",updateDoctor);
-router.patch("/:id",statusDoctor);
-router.get("/:id/appointments",getAllAppointments);
+router.patch("/:id",statusUpdateDoctor);
+router.get("/:id/appointments",getDoctorAppointments);
 
-module.exports =  router;
+module.exports = router;

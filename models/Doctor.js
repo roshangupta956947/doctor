@@ -1,10 +1,9 @@
-const mongoose = require("mongoose");
-const { kStringMaxLength } = require("node:buffer");
+const mongoose = require("mongoose")
 
 const doctorSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, "Doctor name is required"],
+        required: [true, "Doctor Name is required"],
         trim: true
     },
     specialization: {
@@ -14,62 +13,56 @@ const doctorSchema = new mongoose.Schema({
     },
     qualification: {
         type: String,
-        required: [true, " qualification is requireaasds"],
+        required: [true, "Qualification is required"],
         trim: true
-
     },
-    experiance: {
+    experience: {
         type: Number,
         default: 0,
         min: 0
     },
-
-    cunsultation: {
-        type: number,
+    consultationFee: {
+        type: Number,
         required: true,
         min: 0
     },
-    phone :{
-        type : number ,
-        required:true,
-        unique:true,
-        trim:true
-    },
-    email:{
+    phone: {
         type: String,
-        unique:true,
-        sparse:true,
-        lowercase:true,
-        trim:true
+        required: true,
+        unique: true,
+        trim: true
     },
-    availableDays:[{
-        type : String,
-        erum:[
-            "monday", " tuesday", "wednseday", 
-            "thursday", " friday", "Saturday", " sunday"
-        ]
+    email: {
+        type: String,
+        unique: true,
+        sparse: true,
+        lowercase: true,
+        trim: true
+    },
+    availableDays: [{
+        type: String,
+        enum: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     }],
-    startTime:{
-        type:String,
-        required:true
+    startTime: {
+        type: String,
+        required: true
     },
-    endTime:{
-        type:String,
-        required:true
+    endTime: {
+        type: String,
+        required: true
     },
-    slotduration:{
-        type:Number,
-        trim:true
+    slotDuration: {
+        type: Number,
+        default: 15
     },
-    roomnumber:{
-        type:String,
-        trim:true
+    roomNumber: {
+        type: String,
+        trim: true
     },
-    isActive:{
-        type:Boolean,
-        default:true
+    isActive: {
+        type: Boolean,
+        default: true
     }
-
 }, {
     timestamps: true
 });
