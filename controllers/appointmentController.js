@@ -141,7 +141,7 @@ const bookAppointment = async (req, res, next) => {
             reason,
             symptoms: symptoms || [],
             bookingType: bookingType || "Online",
-            consulationFee: doctor.consultationFee,
+            consultationFee: doctor.consultationFee,
             tokenNumber
         });
 

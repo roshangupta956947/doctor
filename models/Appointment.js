@@ -47,7 +47,7 @@ const appointmentSchema = new mongoose.Schema({
         enum: ["Pending", "Paid", "Refunded"],
         default: "Pending"
     },
-    consulationFee: {
+    consultationFee: {
         type: Number,
         required: true
     },
